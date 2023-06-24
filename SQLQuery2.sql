@@ -1,83 +1,45 @@
-create database nsu2
-go
-use nsu2
-go
+USE [datatablep]
+GO
 
-create table department(
-deptname char(10),
-builing varchar(8),
-budget int,
-constraint dndeptname primary key (deptname)
-)
+/****** Object:  Table [dbo].[takes]    Script Date: 4/17/2023 11:15:30 PM ******/
+SET ANSI_NULLS ON
+GO
 
-create table instructor 
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[takes](
+	[ID] [int] NOT NULL,
+	[course_id] [char](30) NOT NULL,
+	[sec_id] [int] NOT NULL,
+	[semester] [char](20) NOT NULL,
+	[year] [int] NOT NULL,
+	[grade] [char](10) NULL,
+ CONSTRAINT [pk_takes] PRIMARY KEY CLUSTERED 
 (
-id smallint primary key,
-[name]nchar(100),
-deptname char(10),
-salary int,
--- foreign key deptname in instructor table and it reference departname table deptname 
-constraint ins_dptn_fk foreign key (deptname) references department ([deptname])
-)
+	[ID] ASC,
+	[course_id] ASC,
+	[sec_id] ASC,
+	[semester] ASC,
+	[year] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
-create table instructor_1
-(
-id smallint primary key,
-[name] nchar (100),
-deptname char(10),
-salary int,
-foreign key(deptname) references department ([deptname])
-)
+ALTER TABLE [dbo].[takes]  WITH CHECK ADD  CONSTRAINT [fk_sec] FOREIGN KEY([course_id], [sec_id], [semester], [year])
+REFERENCES [dbo].[section] ([course_id], [sec_id], [semester], [year])
+GO
 
-create table instructor2(
-id smallint primary key,
-[name] nchar(100),
-deptname char(10) 
-foreign key (deptname) references department([deptname]),
-salary int,
-)
-insert into department values
-('Pharmacy','NAC',12345),
-('Civil','SAC',45894)
+ALTER TABLE [dbo].[takes] CHECK CONSTRAINT [fk_sec]
+GO
 
-select * from department 
+ALTER TABLE [dbo].[takes]  WITH CHECK ADD  CONSTRAINT [fk_stu] FOREIGN KEY([ID])
+REFERENCES [dbo].[student] ([ID])
+on delete cascade 
+on update cascade 
+GO
 
-insert into instructor values
---('1010','Srinivason','CSE',6000),
-(1011,'Wu','civil',4000)
-
-select * from instructor 
-
-create table instructor5
-(
-id smallint primary key,
-[name]nchar (100),
-deptname char(10) foreign key (deptname) references department,
-salary int
-)
-
-create table instructor6
-(
-id smallint,
-[name]nchar (100),
-deptname char(10) foreign key (deptname) references department,
-salary int
-)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ALTER TABLE [dbo].[takes] DROP CONSTRAINT [fk_stu]
+GO
 
 

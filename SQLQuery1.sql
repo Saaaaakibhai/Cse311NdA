@@ -1,68 +1,35 @@
-create database nsu 
-use nsu 
-go 
-create table department(
-deptname varchar(10),
-builing nchar(15),
-budget int
-);
+USE [datatablep]
+GO
 
---showing values of table
-select * from department 
+/****** Object:  Table [dbo].[advisor]    Script Date: 4/17/2023 11:10:25 PM ******/
+SET ANSI_NULLS ON
+GO
 
---inserting values in table
-insert into department values 
-('ece','nac',4500)
+SET QUOTED_IDENTIFIER ON
+GO
 
+CREATE TABLE [dbo].[advisor](
+	[s_id] [int] NOT NULL,
+	[i_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[s_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 
+ALTER TABLE [dbo].[advisor]  WITH CHECK ADD  CONSTRAINT [fk_i_id] FOREIGN KEY([i_id])
+REFERENCES [dbo].[instructor] ([ID])
+GO
 
-create table department1(
-deptname varchar(10),
-builing nchar(15),
-budget int,
-constraint dkeypk primary key (deptname)
-);
+ALTER TABLE [dbo].[advisor] CHECK CONSTRAINT [fk_i_id]
+GO
 
+ALTER TABLE [dbo].[advisor]  WITH CHECK ADD  CONSTRAINT [fk_s_id] FOREIGN KEY([s_id])
+REFERENCES [dbo].[student] ([ID])
+on delete cascade
+on update cascade
+GO
 
-select * from department1
-insert into department1 values 
-('law','sac',4500)
-
-
-create table department2(
-deptname varchar(10),
-builing nchar(15),
-budget int
-primary key (deptname)
-);
-insert into department2 values 
-('law','sac',4500)
-create table department3(
-deptname varchar(10) constraint d3dnpk primary key(deptname),
-builing nchar(15),
-budget int
-);
-
-create table department4(
-deptname varchar (10) primary key,
-building nchar (20),
-budget int 
-)
-
-create table department5(
-deptname varchar (10),
-building nchar (20) constraint d5bpk primary key (deptname),
-budget int 
-)
-
-insert into department5 values 
-('bba','nac',4500)
-select * from [dbo].[department5]
-
-create table department6(
-deptname varchar(50),
-builing nchar(50) constraint dk5dpk primary key (builing),
-budget int 
-)
-insert into department6 values 
-('law','tac',4500)
+ALTER TABLE [dbo].[advisor] DROP CONSTRAINT [fk_s_id]
+GO

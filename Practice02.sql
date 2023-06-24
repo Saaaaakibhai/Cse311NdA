@@ -20,3 +20,5 @@ building nchar(20) NOT NULL,
 budget int NULL,
 constraint chkBuilding500 check 
 )
+
+drop table department200
